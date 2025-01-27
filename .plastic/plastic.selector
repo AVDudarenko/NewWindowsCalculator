@@ -1,0 +1,4 @@
+repository "NewWindowsCalculator/NewWindowsCalculator@7972436520974@cloud"
+  path "/"
+    br "/main"
+    co "/main"
