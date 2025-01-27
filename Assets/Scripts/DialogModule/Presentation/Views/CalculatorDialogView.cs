@@ -51,6 +51,9 @@ namespace Presentation.Views
             SetUnderlineActive(false);
             _errorText.gameObject.SetActive(false);
 
+            // _clearHistoryButton only need for testing
+            _clearHistoryButton.gameObject.SetActive(false);
+
             LoadState();
         }
 
