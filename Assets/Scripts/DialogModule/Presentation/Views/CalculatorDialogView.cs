@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 namespace Presentation.Views
 {
+    /*
+    * The view responsible for displaying and managing the calculator dialog UI.
+    * Handles user interaction and delegates logic to the presenter.
+    */
     public class CalculatorDialogView : MonoBehaviour, ICalculatorDialogView
     {
         [SerializeField] private TMP_InputField _expressionInput;
@@ -31,7 +35,7 @@ namespace Presentation.Views
                 _clearHistoryButton == null || _contentContainer == null ||
                 _historyItemPrefab == null || _scrollView == null)
             {
-                Debug.LogError("Не все поля назначены в инспекторе!");
+                Debug.LogError("Some UI fields are not assigned in the inspector!");
                 return;
             }
             
@@ -98,7 +102,7 @@ namespace Presentation.Views
 
         public void ShowHistory(List<CalculationRecord> records)
         {
-            // Убедитесь, что старые элементы скрыты, но не уничтожены
+            // Hide existing items
             for (int i = 0; i < _historyItemPool.Count; i++)
             {
                 if (_historyItemPool[i] != null)
@@ -109,7 +113,7 @@ namespace Presentation.Views
 
             if (records == null || records.Count == 0)
             {
-                _errorText.text = "История пуста.";
+                _errorText.text = "History is empty.";
                 return;
             }
 
@@ -121,7 +125,7 @@ namespace Presentation.Views
                 {
                     itemView = _historyItemPool[i];
 
-                    if (itemView == null) // Если объект был уничтожен, пересоздаём его
+                    if (itemView == null)
                     {
                         var itemObj = Instantiate(_historyItemPrefab, _contentContainer);
                         itemView = itemObj;
@@ -135,12 +139,10 @@ namespace Presentation.Views
                     _historyItemPool.Add(itemView);
                 }
 
-                // Настраиваем объект
                 itemView.SetData(records[i]);
                 itemView.gameObject.SetActive(true);
             }
 
-            // Убедитесь, что лишние элементы скрыты
             for (int i = records.Count; i < _historyItemPool.Count; i++)
             {
                 if (_historyItemPool[i] != null)
@@ -163,7 +165,7 @@ namespace Presentation.Views
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Ошибка при сохранении состояния: {ex.Message}");
+                Debug.LogError($"Error while saving state: {ex.Message}");
             }
         }
 
@@ -172,7 +174,7 @@ namespace Presentation.Views
             PlayerPrefs.SetString("LastExpression", _state.LastExpression);
             PlayerPrefs.SetInt("IsErrorState", _state.IsErrorState ? 1 : 0);
             PlayerPrefs.Save();
-            Debug.Log("Состояние сохранено.");
+            Debug.Log("State saved.");
         }
 
         private void LoadState()
@@ -187,7 +189,7 @@ namespace Presentation.Views
                 ShowError("Please check the expression you just entered");
             }
 
-            Debug.Log("Состояние восстановлено.");
+            Debug.Log("State loaded.");
         }
 
         private void SetUnderlineActive(bool isActive)

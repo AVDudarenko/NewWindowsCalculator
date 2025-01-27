@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Data
 {
+    /*
+    * A repository for managing calculation history using Unity's PlayerPrefs system.
+    * Stores, retrieves, and clears calculation records in a persistent storage.
+    */
     public class PlayerPrefsHistoryRepository : IHistoryRepository
     {
         private const string KEY = "calc_history";
@@ -59,7 +63,7 @@ namespace Data
 
         private void SaveAll(List<CalculationRecord> records)
         {
-            // Формат: "12+5=17;98.12+48.1=ERROR;..."
+            // Format: "12+5=17;98.12+48.1=ERROR;..."
             var joined = string.Join(";", records.Select(r => $"{r.Expression}={r.Result}"));
             PlayerPrefs.SetString(KEY, joined);
             PlayerPrefs.Save();

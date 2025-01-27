@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Presentation.Presenters
 {
+    /*
+    * The presenter responsible for handling the interaction between the Calculator Dialog view and business logic.
+    * Manages user input, validation, and updates to the view.
+    */
     public class CalculatorDialogPresenter
     {
         private readonly ICalculatorDialogView _view;
@@ -18,7 +22,7 @@ namespace Presentation.Presenters
             _useCase = new CalculatorUseCase();
             _history = new PlayerPrefsHistoryRepository();
 
-            // При создании вьюхи сразу показать историю, если уже есть
+            // Display all history upon initializing the view.
             ShowAllHistory();
         }
 
@@ -45,14 +49,14 @@ namespace Presentation.Presenters
                 }
             }
 
-
-            // Сохраняем в историю
+            // Save the result to the history.
             var record = new CalculationRecord(expression, result);
             _history.SaveRecord(record);
 
-            // Обновим UI
+            // Update the UI with the new history.
             ShowAllHistory();
 
+            // Clear the input field.
             _view.ClearInput();
         }
 

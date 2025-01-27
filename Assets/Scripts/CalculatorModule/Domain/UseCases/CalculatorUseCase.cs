@@ -2,6 +2,9 @@
 
 namespace Domain.UseCases
 {
+    /*
+    * Represents the use case for performing basic calculator operations, such as validating and calculating expressions.
+    */
     public class CalculatorUseCase
     {
         public bool ValidateExpression(string expression)
@@ -11,7 +14,7 @@ namespace Domain.UseCases
        
         public int Calculate(string expression)
         {
-            // Делим строку по знаку '+'
+            // Split the expression by the '+' sign
             var parts = expression.Split('+');
             int a = int.Parse(parts[0]);
             int b = int.Parse(parts[1]);
